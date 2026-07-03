@@ -1,0 +1,25 @@
+Câu 4.2
+- Vì BIKE_MODEL được khai báo const char BIKE_MODEL[] = "E-Bike X2026"; nên BIKE_MODEL là một const,
+vì vậy BIKE_MODEL được lưu trong vùng nhớ chỉ đọc .rodata
+- Vì total_odometer được khai báo uint32_t total_odometer = 0; là biến toàn cục được khởi tạo bằng 0, 
+nên được lưu vào.bss
+- Vì current_speed được khai báo trong hàm main: int current_speed = 25; dây là biến cục bộ 
+nên được cấp phát trên Stack.
+
+Câu 4.3:
+- Khi kích hoạt hàm crash_simulation(), hàm sẽ gọi đệ quy vô hạn. Mỗi lần gọi sẽ tạo 
+thêm một stack frame, làm bộ nhớ ngăn xếp (Stack) tăng dần cho đến khi bị tràn (Stack Overflow).
+- Trên vi điều khiển ARM Cortex-M: khi xảy ra lỗi Stack Overflow, CPU thường phát sinh Hard Fault 
+và chuyển đến hàm xử lý ngoại lệ:
+HardFault_Handler() để xử lý sự cố.
+
+Câu 5:
+- Chọn Cách 1 (uint16_t trip_history[20000] = {0}) vì bản chất Với cách khai báo {0}, toàn bộ phần 
+tử của mảng đều bằng 0 nên biến được đặt trong phân vùng .bss. Phân vùng .bss không lưu dữ liệu khởi 
+tạo trong Flash, chỉ cấp phát dung lượng trong RAM khi chương trình khởi động. Vì vậy, cách này gần 
+như không làm tăng dung lượng Flash. Còn với Cách 2, mảng chứa dữ liệu khởi tạo khác 0 nên được đặt
+trong phân vùng .data. Khi đó, toàn bộ khoảng 40 KB dữ liệu khởi tạo phải được lưu trong Flash để 
+sao chép sang RAM khi khởi động. Do Flash chỉ còn 20 KB, chương trình sẽ vượt quá dung lượng Flash 
+và không thể nạp xuống vi điều khiển.
+
+     
