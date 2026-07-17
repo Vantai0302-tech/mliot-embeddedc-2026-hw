@@ -1,0 +1,24 @@
+1.1
+Hoạt động của cặp Transistor PMOS và NMOS (Chế độ Push-Pull):
+- Mức logic 1 (3.3V): Transistor PMOS được kích hoạt (đóng mạch), Transistor NMOS bị ngắt. 
+Chân GPIO được kết nối trực tiếp với nguồn VDD, kéo điện áp tại chân này lên 3.3V.
+ Dòng điện có thể "đẩy" (Push) từ VDD ra tải.
+- Mức logic 0 (0V): Transistor PMOS bị ngắt, Transistor NMOS được kích hoạt (đóng mạch). 
+Chân GPIO được kết nối trực tiếp với đất (VSS/GND), kéo điện áp tại chân này xuống 0V. 
+Dòng điện có thể "kéo" (Pull) từ tải về GND.
+1.2
+Chế độ Input Pull-up và Trạng thái Floating:
+- Input Pull-up: Sử dụng khi kết nối với các thiết bị ngoại vi dạng nút nhấn mạch hở (Active-low).
+Mạch Pull-up nội bộ giữ cho chân GPIO luôn ở mức logic 1 (HIGH) khi nút chưa được nhấn, tránh trạng 
+thái lửng lơ. Khi nhấn nút, chân GPIO nối thẳng xuống GND tạo ra mức logic 0 (LOW) một cách dứt khoát.
+- Trạng thái Floating (No Pull-up/Pull-down): Lúc này, chân GPIO ở trạng thái trở kháng cao (High-Z) 
+và đóng vai trò như một anten. Nó sẽ thu các nhiễu điện từ trong môi trường, khiến thanh ghi dữ liệu 
+đầu vào liên tục dao động ngẫu nhiên giữa 0 và 1, dẫn đến phần mềm đọc sai trạng thái.
+
+2
+- Việc ngắt clock mặc định của tất cả ngoại vi giúp vi điều khiển tiết kiệm năng lượng tối đa khi mới 
+khởi động hoặc khi không sử dụng ngoại vi đó.
+- Nếu lập trình viên quên bật Clock mà vẫn cấu hình các thanh ghi GPIO thì các giá trị ghi vào thường 
+không có hiệu lực, việc đọc thanh ghi có thể không đúng như mong muốn và chân GPIO sẽ không hoạt động. 
+Do đó, chương trình sẽ không thể điều khiển LED, đọc nút nhấn hoặc thực hiện các chức năng GPIO khác mặc 
+dù mã nguồn cấu hình có vẻ chính xác.
