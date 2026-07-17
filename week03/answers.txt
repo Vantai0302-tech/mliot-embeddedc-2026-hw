@@ -1,0 +1,66 @@
+1.1
+ Cồng dụng chính của 4 cồng cụ trong dự án nhúng:
+ - CMake: là công cụ cấu hình dự án. Bằng cách đọc file CMakeLists.txt, xác định cấu trúc dự án,
+  compiler, linker sau đó tạo ra các file build tương ứng với hệ thống build được chọn
+ - Ninja: là công cụ build có tác dụng đọc các file build do CMake tạo ra để thực hiện quá trình 
+ biên dịch
+ - Compiler (arm-none-eabi-gcc): dịch mã nguồn C/C++ thành mã nguồn máy cho vi điều khiển ARM Cortex-M 
+ của STM32
+ - STM32_Programmer_CLI: là công cụ giao diện dòng lệnh của STMicroelectronics. dùng để giao tiếp với 
+ ST-Link và nạp firmware xuống bộ nhớ Flash của vi điều khiển STM32.
+
+1.2
+Trình tự thực thi: CMake -> Ninja -> Compiler -> STM32_Programmer_CLI.
+(1) : CMake đọc CMakeList.txt để sinh ra các file build cho Ninja
+(2) : Ninja đọc các file build do CMake tạo ra và gọi Compiler để thực hiện trình biên dịch. Linker 
+liên kết các file .o với thư viện và Linker Script để tạo file .elf, sau đó sinh file .bin.
+(3) : Compiler biên dịch từ các file nguồn `.c` thành các file đối tượng mã máy riêng lẻ (`.o`).
+(4) : Nạp file .bin vào Flash của STM32.
+
+2.1
+- Các file .o chỉ chứa mã máy của từng file nguồn riêng lẻ và vẫn còn các tham chiếu đến hàm
+ hoặc biến nằm ở các file khác. Chúng chưa có địa chỉ bộ nhớ cuối cùng nên chưa thể nạp 
+ trực tiếp xuống vi điều khiển. Linker có nhiệm vụ liên kết tất cả các file .o, 
+ giải quyết các symbol giữa các module, sắp xếp các section (.text, .data, .bss,...) 
+ theo Linker Script và gán địa chỉ bộ nhớ chính xác cho từng phần của chương trình.
+- Khác biệt cốt lõi: File .o chứa mã máy, dữ liệu thô kèm theo rất nhiều siêu dữ liệu 
+(metadata, bảng symbol, thông tin debug). File .bin là file nhị phân thô (Raw binary), 
+đã bị tước bỏ toàn bộ siêu dữ liệu, chỉ còn lại chính xác chuỗi byte lệnh và dữ liệu sẽ được sao chép
+ nguyên trạng vào vùng nhớ Flash của Vi điều khiển.
+
+2.2
+ - Khi dự án có hàng trăm file nguồn, nếu mỗi lần chỉnh sửa đều biên dịch lại toàn bộ dự án thì 
+ sẽ mất rất nhiều thời gian.
+
+ - Ninja hỗ trợ Incremental Build, nghĩa là chỉ biên dịch lại những file đã thay đổi và các file 
+ phụ thuộc vào chúng. Điều này giúp giảm đáng kể thời gian build.
+
+ - Ninja xác định file cần biên dịch lại bằng cách so sánh timestamp (thời gian sửa đổi) của các file
+ và dựa trên dependency graph do CMake tạo ra. Nếu một file .c hoặc file header liên quan được sửa đổi,
+ Ninja chỉ biên dịch lại những phần bị ảnh hưởng thay vì toàn bộ dự án.
+
+3.1
+ Vùng .data có hai địa chỉ khác nhau:
+
+- LMA (Load Memory Address) là địa chỉ lưu dữ liệu trong bộ nhớ Flash. Giá trị này được xác định 
+bởi _sidata.
+- VMA (Virtual/Runtime Memory Address) là địa chỉ mà chương trình sẽ sử dụng khi chạy. Trong đoạn 
+script trên, vùng .data được đặt trong RAM nên VMA nằm ở RAM.
+
+ Phân vùng .data cần có cả LMA và VMA vì các biến toàn cục có giá trị khởi tạo phải được 
+lưu trong Flash để không bị mất khi tắt nguồn, nhưng khi chương trình chạy chúng phải nằm trong 
+RAM để CPU có thể đọc và ghi dữ liệu một cách nhanh chóng.
+
+3.2
+- Sau khi vi điều khiển reset, Startup Code (Reset_Handler) sẽ sao chép dữ liệu từ địa chỉ _sidata 
+trong Flash sang _sdata trong RAM.
+
+- Nếu bước sao chép này bị bỏ qua thì vùng .data trong RAM sẽ không chứa các giá trị khởi tạo ban 
+đầu mà chỉ chứa dữ liệu không xác định (giá trị rác). Khi đó các biến toàn cục có giá trị khởi 
+tạo sẽ có giá trị sai, dẫn đến chương trình hoạt động không đúng hoặc gặp lỗi ngay từ khi khởi động.
+
+4.1
+cmake -S . -B build -G Ninja
+4.2
+ninja -C build
+
