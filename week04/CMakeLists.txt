@@ -21,9 +21,10 @@ endif()
 # Set the project name
 set(CMAKE_PROJECT_NAME week04)
 
+include("cmake/gcc-arm-none-eabi.cmake")
+
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
-
 
 # Core project settings
 project(${CMAKE_PROJECT_NAME})
@@ -67,6 +68,3 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 
     # Add user defined libraries
 )
-
-
-

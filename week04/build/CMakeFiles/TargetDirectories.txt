@@ -1,0 +1,6 @@
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/CMakeFiles/week04.dir
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/CMakeFiles/edit_cache.dir
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/CMakeFiles/rebuild_cache.dir
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir

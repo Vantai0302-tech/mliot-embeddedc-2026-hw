@@ -1,0 +1,7 @@
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/Core/Src/main.c:74:5:main	8	static
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/Core/Src/main.c:124:6:SystemClock_Config	72	static
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/Core/Src/main.c:164:13:MX_GPIO_Init	40	static
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/Core/Src/main.c:215:6:Task3_Blink	8	static
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/Core/Src/main.c:221:6:Task4_Button	16	static
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/Core/Src/main.c:247:6:Task5_Keypad	8	static
+C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/Core/Src/main.c:288:6:Error_Handler	4	static
