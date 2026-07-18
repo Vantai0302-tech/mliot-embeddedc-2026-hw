@@ -16,7 +16,7 @@ echo ==========================================
 echo STEP 2: CONFIGURING PROJECT WITH CMAKE
 echo ==========================================
 
-cmake -S . -B build -G Ninja -DCMAKE_TOOLCHAIN_FILE=cmake/gcc-arm-none-eabi.cmake
+cmake -S . -B build -G Ninja 
 if %ERRORLEVEL% neq 0 (
     echo CMake configuration failed!
     pause

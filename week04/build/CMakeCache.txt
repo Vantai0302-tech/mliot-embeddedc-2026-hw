@@ -223,9 +223,6 @@ CMAKE_STRIP:FILEPATH=C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/14.2
 //Path to a program.
 CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 
-//The CMake toolchain file
-CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/cmake/gcc-arm-none-eabi.cmake
-
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
 // during the make.  This is useful for debugging only. With Visual
