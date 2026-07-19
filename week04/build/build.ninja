@@ -135,7 +135,7 @@ build week04.elf: C_EXECUTABLE_LINKER__week04_Debug cmake/stm32cubemx/CMakeFiles
   LINK_FLAGS = -mcpu=cortex-m3  -T "C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/STM32F103XX_FLASH.ld" --specs=nano.specs -Wl,-Map=week04.map -Wl,--gc-sections -Wl,--print-memory-usage
   LINK_LIBRARIES = -lm
   OBJECT_DIR = CMakeFiles\week04.dir
-  POST_BUILD = cd .
+  POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Laptrinhnhung\LabembededC\mliot-embeddedc-2026-hw\week04\build && arm-none-eabi-objcopy -O binary C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/week04.elf C:/Laptrinhnhung/LabembededC/mliot-embeddedc-2026-hw/week04/build/week04.bin"
   PRE_LINK = cd .
   TARGET_COMPILE_PDB = CMakeFiles\week04.dir\
   TARGET_FILE = week04.elf
