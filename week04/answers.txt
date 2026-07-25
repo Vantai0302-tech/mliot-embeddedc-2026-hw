@@ -22,3 +22,5 @@ khởi động hoặc khi không sử dụng ngoại vi đó.
 không có hiệu lực, việc đọc thanh ghi có thể không đúng như mong muốn và chân GPIO sẽ không hoạt động. 
 Do đó, chương trình sẽ không thể điều khiển LED, đọc nút nhấn hoặc thực hiện các chức năng GPIO khác mặc 
 dù mã nguồn cấu hình có vẻ chính xác.
+
+Link mo phong: https://drive.google.com/file/d/1fyaf5rVamBTgmz_sFSk59j2xqNPOngiO/view?usp=sharing
